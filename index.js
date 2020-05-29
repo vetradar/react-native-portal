@@ -70,7 +70,7 @@ export class PortalProvider extends React.Component {
   }
 }
 
-export class BlackPortal extends React.PureComponent {
+export class BlackPortal extends React.Component {
   static contextTypes = oContextTypes;
   props: {
     name: string,
@@ -104,7 +104,7 @@ export class BlackPortal extends React.PureComponent {
   }
 }
 
-export class WhitePortal extends React.PureComponent {
+export class WhitePortal extends React.Component {
   static contextTypes = oContextTypes;
 
   props: {
