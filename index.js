@@ -30,7 +30,7 @@ export class PortalProvider extends React.Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._emitter = new mitt();
   }
 
@@ -62,7 +62,7 @@ export class PortalProvider extends React.Component {
     }
   };
 
-  portalGet = name => this.portals.get(name) || null;
+  portalGet = (name) => this.portals.get(name) || null;
 
   // 변경
   render() {
@@ -76,12 +76,14 @@ export class BlackPortal extends React.PureComponent {
     name: string,
     children?: *,
   };
+
   componentDidMount() {
     const { name, children } = this.props;
     const { portalSet } = this.context;
     portalSet && portalSet(name, children);
   }
-  componentWillReceiveProps(newProps) {
+
+  UNSAFE_componentWillReceiveProps(newProps) {
     const oldProps = this.props;
     const { name, children } = newProps;
     const { portalSet } = this.context;
@@ -89,11 +91,13 @@ export class BlackPortal extends React.PureComponent {
       portalSet && portalSet(name, children);
     }
   }
+
   componentWillUnmount() {
     const { name } = this.props;
     const { portalSet } = this.context;
     portalSet && portalSet(name, null);
   }
+
   render() {
     const { name } = this.props;
     return null;
@@ -102,21 +106,25 @@ export class BlackPortal extends React.PureComponent {
 
 export class WhitePortal extends React.PureComponent {
   static contextTypes = oContextTypes;
+
   props: {
     name: string,
     children?: *,
     childrenProps?: *,
   };
-  componentWillMount() {
+
+  UNSAFE_componentWillMount() {
     const { name } = this.props;
     const { portalSub } = this.context;
     portalSub && portalSub(name, this.forceUpdater);
   }
+
   componentWillUnmount() {
     const { name } = this.props;
     const { portalUnsub } = this.context;
     portalUnsub && portalUnsub(name, this.forceUpdater);
   }
+
   forceUpdater = () => this.forceUpdate();
 
   render() {
